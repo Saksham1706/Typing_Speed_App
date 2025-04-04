@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // DOM Elements
   const homeScreen = document.getElementById('home');
   const setupScreen = document.getElementById('setup');
@@ -24,17 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const accuracyStat = document.getElementById('accuracyStat');
   const errorsStat = document.getElementById('errorsStat');
 
-  // Sample sentences
-  const sentences = [
-    "The quick brown fox jumps over the lazy dog.",
-    "Programming is the art of telling another human what one wants the computer to do.",
-    "To be or not to be, that is the question.",
-    "The only way to learn a new programming language is by writing programs in it.",
-    "In the middle of difficulty lies opportunity."
-  ];
-
   // Variables
   let testText = '';
+  let sentences = [];
   let timer;
   let startTime;
   let currentIndex = 0;
@@ -43,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let correctTyped = 0;
   let testActive = false;
   let countdownInterval;
-  const testDuration = 60; // 1 minute for timer mode
+  const testDuration = 60;
   let remainingTime = testDuration;
 
   // Initialize progress circle
@@ -53,18 +45,52 @@ document.addEventListener('DOMContentLoaded', function() {
   circle.style.strokeDasharray = `${circumference} ${circumference}`;
   circle.style.strokeDashoffset = circumference;
 
-  // Event Listeners
-  startBtn.addEventListener('click', showSetup);
-  beginTestBtn.addEventListener('click', beginTest);
-  endBtn.addEventListener('click', endTest);
-  retryBtn.addEventListener('click', retryTest);
-  newTestBtn.addEventListener('click', newTest);
-  textInput.addEventListener('input', checkTyping);
-  decrementBtn.addEventListener('click', () => adjustWordCount(-1));
-  incrementBtn.addEventListener('click', () => adjustWordCount(1));
-  modeSelect.addEventListener('change', toggleModeSettings);
+  // Load sentences from sentences.txt
+  async function loadSentences() {
+    try {
+      const response = await fetch('sentences.txt');
+      if (!response.ok) throw new Error('Failed to load sentences');
+      const text = await response.text();
+      
+      sentences = text.split('\n')
+        .map(sentence => sentence.trim())
+        .filter(sentence => sentence.length > 0);
+      
+      if (sentences.length === 0) {
+        throw new Error('File is empty');
+      }
+    } catch (error) {
+      console.error('Error loading sentences:', error);
+      // Fallback sentences
+      sentences = [
+        "The quick brown fox jumps over the lazy dog.",
+        "Programming is the art of telling another human what one wants the computer to do.",
+        "To be or not to be, that is the question.",
+        "The only way to learn a new programming language is by writing programs in it.",
+        "In the middle of difficulty lies opportunity."
+      ];
+    }
+  }
 
-  // Functions
+  // Initialize the application
+  async function init() {
+    await loadSentences();
+    setupEventListeners();
+    toggleModeSettings();
+  }
+
+  function setupEventListeners() {
+    startBtn.addEventListener('click', showSetup);
+    beginTestBtn.addEventListener('click', beginTest);
+    endBtn.addEventListener('click', endTest);
+    retryBtn.addEventListener('click', retryTest);
+    newTestBtn.addEventListener('click', newTest);
+    textInput.addEventListener('input', checkTyping);
+    decrementBtn.addEventListener('click', () => adjustWordCount(-1));
+    incrementBtn.addEventListener('click', () => adjustWordCount(1));
+    modeSelect.addEventListener('change', toggleModeSettings);
+  }
+
   function showSetup() {
     homeScreen.classList.add('hidden');
     setupScreen.classList.remove('hidden');
@@ -106,6 +132,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function getRandomSentences(count) {
+    if (count > sentences.length) {
+      console.warn(`Requested ${count} sentences but only ${sentences.length} available`);
+      count = sentences.length;
+    }
+    
     const shuffled = [...sentences].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }
@@ -296,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Initialize
-  createParticles();
-  toggleModeSettings();
+  // Start the application
+  init();
 });

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Test</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .hidden { display: none; }
+    .grey { color: #ccc; }
+    .green { color: green; }
+    .red { color: red; text-decoration: underline; }
+    #textInput {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+    }
+    #homeBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="home">
+    <button id="startBtn">Start Typing Test</button>
+  </div>
+
+  <div id="setup" class="hidden">
+    <label for="modeSelect">Select Mode:</label>
+    <select id="modeSelect">
+      <option value="sentence">Fixed Sentences</option>
+      <option value="timer">1 Minute Timer</option>
+    </select>
+    
+    <div id="sentenceCountLabel">
+      <label for="wordCount">Number of Sentences:</label>
+      <input type="number" id="wordCount" value="1" min="1" max="10">
+    </div>
+    
+    <button id="beginTest">Begin</button>
+  </div>
+
+  <div id="testArea" class="hidden">
+    <div id="countdown"></div>
+    <div id="liveTimer" class="hidden">Time Left: <span id="timeLeft">60</span>s</div>
+
+    <div id="textSkeleton"></div>
+    <textarea id="textInput" disabled></textarea>
+    <button id="endBtn" class="hidden">End Test</button>
+  </div>
+
+  <div id="thankYou" class="hidden">
+    <div id="result"></div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>

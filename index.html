@@ -2,59 +2,139 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Typing Speed Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeedType Pro | Typing Speed Test</title>
+  <meta name="description" content="Test and improve your typing speed with professional typing tests">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="./style.css">
   <style>
-    .hidden { display: none; }
-    .grey { color: #ccc; }
-    .green { color: green; }
-    .red { color: red; text-decoration: underline; }
-    #textInput {
-      width: 100%;
-      height: 100px;
-      margin: 10px 0;
-    }
-    #homeBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
+    .hidden { display: none !important; }
+    .grey { color: var(--text-secondary); }
+    .green { color: var(--success); }
+    .red { color: var(--error); text-decoration: underline; }
+    .progress-ring__circle {
+      transition: stroke-dashoffset 0.35s;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
     }
   </style>
+  
 </head>
 <body>
-  <div id="home">
-    <button id="startBtn">Start Typing Test</button>
-  </div>
-
-  <div id="setup" class="hidden">
-    <label for="modeSelect">Select Mode:</label>
-    <select id="modeSelect">
-      <option value="sentence">Fixed Sentences</option>
-      <option value="timer">1 Minute Timer</option>
-    </select>
-    
-    <div id="sentenceCountLabel">
-      <label for="wordCount">Number of Sentences:</label>
-      <input type="number" id="wordCount" value="1" min="1" max="10">
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Check Your <span class="logo-highlight">Speed</span> with <span class="logo-highlight">Pro</span></h1>
     </div>
-    
-    <button id="beginTest">Begin</button>
-  </div>
+  </header>
 
-  <div id="testArea" class="hidden">
-    <div id="countdown"></div>
-    <div id="liveTimer" class="hidden">Time Left: <span id="timeLeft">60</span>s</div>
+  <main class="main-content">
+    <div class="container">
+      <div id="home" class="card home-card">
+        <div class="hero-content">
+          <h2>Hi ! Check your keyboard speed </h2>
+          <p>Test and improve your typing speed with professional typing tests</p>
+          <button id="startBtn" class="btn btn-primary btn-lg">
+            <i class="fas fa-keyboard"></i> Start Typing Test
+          </button>
+        </div>
+      </div>
 
-    <div id="textSkeleton"></div>
-    <textarea id="textInput" disabled></textarea>
-    <button id="endBtn" class="hidden">End Test</button>
-  </div>
+      <div id="setup" class="card hidden">
+        <h2 class="section-title">Test Configuration</h2>
+        <div class="form-group">
+          <label for="modeSelect" class="form-label">Test Mode:</label>
+          <select id="modeSelect" class="form-control">
+            <option value="sentence">Fixed Sentences</option>
+            <option value="timer">1 Minute Timer</option>
+            <option value="paragraph">Paragraph Challenge</option>
+          </select>
+        </div>
+        
+        <div id="sentenceCountLabel" class="form-group">
+          <label for="wordCount" class="form-label">Number of Sentences:</label>
+          <div class="input-stepper">
+            <button class="stepper-btn" id="decrementCount"><i class="fas fa-minus"></i></button>
+            <input type="number" id="wordCount" class="form-control stepper-input" value="1" min="1" max="10">
+            <button class="stepper-btn" id="incrementCount"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        
+        <button id="beginTest" class="btn btn-primary btn-block">
+          <i class="fas fa-play"></i> Begin Test
+        </button>
+      </div>
 
-  <div id="thankYou" class="hidden">
-    <div id="result"></div>
-  </div>
+      <div id="testArea" class="card hidden">
+        <div class="test-header">
+          <div class="timer-display">
+            <svg class="progress-ring" width="60" height="60">
+              <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+            </svg>
+            <div id="countdown" class="countdown-text">3</div>
+          </div>
+          <div id="liveTimer" class="hidden">
+            <i class="fas fa-clock"></i> <span id="timeLeft">60</span>s
+          </div>
+        </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <div id="textSkeleton" class="text-display"></div>
+        <textarea id="textInput" class="typing-input" disabled placeholder="Start typing here when the test begins..."></textarea>
+        
+        <div class="stats-display hidden">
+          <div class="stat-box">
+            <span class="stat-value" id="wpmStat">0</span>
+            <span class="stat-label">WPM</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="accuracyStat">0%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="errorsStat">0</span>
+            <span class="stat-label">Errors</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="thankYou" class="card hidden">
+        <div class="result-header">
+          <i class="fas fa-trophy result-icon"></i>
+          <h2 class="section-title">Your Results</h2>
+        </div>
+        <div id="result" class="result-content"></div>
+        <div class="result-actions">
+          <button id="retryBtn" class="btn btn-secondary">
+            <i class="fas fa-redo"></i> Try Again
+          </button>
+          <button id="newTestBtn" class="btn btn-primary">
+            <i class="fas fa-keyboard"></i> New Test
+          </button>
+          <button id="shareBtn" class="btn btn-outline">
+            <i class="fas fa-share-alt"></i> Share Results
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button id="endBtn" class="floating-btn hidden">
+    <i class="fas fa-stop"></i> End Test
+  </button>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 SpeedType Pro. All rights reserved.</p>
+      <div class="footer-links">
+        
+        <a href="#">Made By SAKSHAM</a>
+        
+      </div>
+    </div>
+  </footer>
+
   <script src="./index.js"></script>
 </body>
 </html>

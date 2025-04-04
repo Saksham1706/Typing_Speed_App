@@ -1,4 +1,4 @@
-/* ===== Global Styles ===== */
+
 :root {
   --primary: #4361ee;
   --primary-dark: #3a56d4;
@@ -14,8 +14,6 @@
   --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   --transition: all 0.3s ease;
 }
-
-/* ===== Base Styles ===== */
 * {
   margin: 0;
   padding: 0;
@@ -43,7 +41,6 @@ body {
   padding: 0 20px;
 }
 
-/* ===== Typography ===== */
 h1, h2, h3, h4 {
   font-weight: 700;
   line-height: 1.2;
@@ -62,7 +59,6 @@ p {
   margin-bottom: 1rem;
 }
 
-/* ===== Header Styles ===== */
 .header {
   padding: 1.5rem 0;
   background-color: var(--bg-secondary);
@@ -78,8 +74,6 @@ p {
 .logo-highlight {
   color: var(--primary);
 }
-
-/* ===== Card Styles ===== */
 .card {
   background-color: var(--bg-secondary);
   border-radius: var(--border-radius);
@@ -110,7 +104,6 @@ p {
   margin-bottom: 2rem;
 }
 
-/* ===== Button Styles ===== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -168,7 +161,6 @@ p {
   width: 100%;
 }
 
-/* ===== Form Styles ===== */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -223,7 +215,6 @@ p {
   background-color: #e0e0e0;
 }
 
-/* ===== Test Area Styles ===== */
 .test-header {
   display: flex;
   justify-content: space-between;
@@ -260,7 +251,6 @@ p {
   gap: 0.5rem;
 }
 
-/* ===== Text Display Styles ===== */
 .text-display {
   padding: 1.5rem;
   background-color: #f8f9fa;
@@ -289,7 +279,6 @@ p {
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
 }
 
-/* ===== Stats Display ===== */
 .stats-display {
   display: flex;
   justify-content: space-around;
@@ -315,7 +304,6 @@ p {
   color: var(--text-secondary);
 }
 
-/* ===== Result Styles ===== */
 .result-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -338,7 +326,6 @@ p {
   flex-wrap: wrap;
 }
 
-/* ===== Floating Button ===== */
 .floating-btn {
   position: fixed;
   bottom: 2rem;
@@ -363,7 +350,6 @@ p {
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* ===== Footer Styles ===== */
 .footer {
   margin-top: auto;
   padding: 2rem 0;
@@ -390,7 +376,6 @@ p {
   color: var(--primary);
 }
 
-/* ===== Responsive Styles ===== */
 @media (max-width: 768px) {
   .container {
     padding: 0 15px;
@@ -414,7 +399,6 @@ p {
   }
 }
 
-/* ===== Animation Keyframes ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
